@@ -1,6 +1,8 @@
 package com.qyinter.yuanshenlink.http
 
 import android.content.SharedPreferences
+import android.os.Handler
+import android.os.Message
 import android.webkit.CookieManager
 import com.google.gson.Gson
 import com.qyinter.yuanshenlink.dto.*
@@ -22,7 +24,7 @@ object HttpUtil {
         .writeTimeout(10, TimeUnit.SECONDS)
         .build()
 
-    fun getAuthkey(cookie: String,editor: SharedPreferences.Editor):String {
+    fun getAuthkey(cookie: String,editor: SharedPreferences.Editor,handler: Handler):String {
         Thread(Runnable {
             val time = Date().time
             val req = Request.Builder()
@@ -107,6 +109,11 @@ object HttpUtil {
             val chouka ="https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=b4ac24d133739b7b1d55173f30ccf980e0b73fc1&lang=zh-cn&device_type=mobile&game_version=CNRELiOS3.0.0_R10283122_S10446836_D10316937&plat_type=ios&game_biz=${gameBiz}&size=20&authkey=${authkey}&region=${region}&timestamp=1664481732&gacha_type=200&page=1&end_id=0"
             editor.putString("body",chouka)
             editor.commit()
+
+            val msg = Message.obtain()
+            msg.obj = "done"
+            //返回主线程
+            handler.sendMessage(msg)
         }).start()
         return  "";
     }

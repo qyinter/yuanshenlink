@@ -1,36 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cookieBtn"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="然后读取cookie"
-            android:insetRight="10dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/showcookie"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="然后显示抽卡链接"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:insetLeft="10dp" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-    <EditText
-        android:id="@+id/input"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"/>
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="第一步：登录米游社"
+            android:textSize="16dp" />
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="第二步：获取链接并复制到剪贴板"
+            android:textSize="16dp" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cookieBtn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="点击获取并复制链接" />
+
+            <!--        <com.google.android.material.button.MaterialButton-->
+            <!--            android:id="@+id/showcookie"-->
+            <!--            android:layout_width="100dp"-->
+            <!--            android:layout_height="40dp"-->
+            <!--            android:text="然后显示抽卡链接"-->
+            <!--            android:layout_marginLeft="20dp"-->
+            <!--            android:layout_weight="1"-->
+            <!--            android:insetLeft="10dp" />-->
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+</ScrollView>
