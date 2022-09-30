@@ -60,8 +60,7 @@ object HttpUtil {
                 )
                 var newcookie = "stuid=${uid};"
                 for (dataObj in MultiDataData.data.list) {
-                    val token = "${dataObj.name}=${dataObj.token};"
-                    newcookie += token
+                    newcookie += "${dataObj.name}=${dataObj.token};"
                 }
                 newcookie += cookie
                 println(newcookie)
@@ -113,21 +112,21 @@ object HttpUtil {
                 editor.commit()
 
                 val msg = Message.obtain()
-                msg.obj = "success"
+                msg.obj = ChouKaObj(200,"请求成功",chouka)
                 //返回主线程
                 handler.sendMessage(msg)
             }catch (e:java.lang.Exception){
                 val msg = Message.obtain()
-                msg.obj = "error"
+                msg.obj = ChouKaObj(404,"获取失败","")
                 //返回主线程
                 handler.sendMessage(msg)
             }
         }).start()
-        return  "";
+        return  ""
     }
 
-    fun getDs() : String{
-        var times = Date().time/1000
+    private fun getDs() : String{
+        val times = Date().time/1000
         val salt = "ulInCDohgEs557j0VsPDYnQaaz6KJcv5"
         val time =  times
         val str = this.getStr()
@@ -136,7 +135,7 @@ object HttpUtil {
 
         return "${time},${str},${md5}"
     }
-    fun getStr(): String{
+    private fun getStr(): String{
         val chars = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678"
         val maxPos = chars.length
         var code = ""
