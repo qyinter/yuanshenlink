@@ -15,6 +15,7 @@ import okhttp3.RequestBody
 import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 object HttpUtil {
@@ -24,7 +25,7 @@ object HttpUtil {
         .writeTimeout(10, TimeUnit.SECONDS)
         .build()
 
-    fun getAuthkey(cookie: String,editor: SharedPreferences.Editor,handler: Handler):String {
+    fun getAuthkey(cookie: String,handler: Handler):String {
         Thread(Runnable {
 
             try {
@@ -64,7 +65,7 @@ object HttpUtil {
                 }
                 newcookie += cookie
                 println(newcookie)
-                //huoq获取uid
+                //获取uid
                 val uidreq = Request.Builder()
                     .url("https://api-takumi.mihoyo.com/binding/api/getUserGameRolesByCookie?game_biz=hk4e_cn")
                     .header("Cookie",newcookie)
@@ -77,47 +78,47 @@ object HttpUtil {
                     uidDataDtobody,
                     UserGameRolesByCookieDataDto::class.java
                 )
-
-                val gameUid = UserGameRolesByCookieData.data.list.get(0).game_uid
-                val gameBiz = UserGameRolesByCookieData.data.list.get(0).game_biz
-                val region = UserGameRolesByCookieData.data.list.get(0).region
-
-                val authKeyPostData = AuthKeyPostData("webview_gacha",gameBiz,gameUid,region)
-                val toJson = gson.toJson(authKeyPostData)
-                val createRequestBody = RequestBody.create("application/json;charset=utf-8".toMediaType(), toJson)
-                println(newcookie)
-                val authkeyreq = Request.Builder()
-                    .url("https://api-takumi.mihoyo.com/binding/api/genAuthKey")
-                    .header("Content-Type","application/json;charset=utf-8")
-                    .header("Host","api-takumi.mihoyo.com")
-                    .header("Accept","application/json, text/plain, */*")
-                    .header("x-rpc-app_version","2.28.1")
-                    .header("x-rpc-client_type","5")
-                    .header("x-rpc-device_id","CBEC8312-AA77-489E-AE8A-8D498DE24E90")
-                    .header("DS",getDs())
-                    .header("Cookie",newcookie)
-                    .post(createRequestBody)
-                    .build()
-                val authkeycall = client.newCall(authkeyreq)
-                val authkeyresponse = authkeycall.execute()
-                val authkeyDataDtobody = authkeyresponse.body?.string()
-                println(authkeyDataDtobody)
-                val authKeyDataDto = gson.fromJson(
-                    authkeyDataDtobody,
-                    AuthKeyDataDto::class.java
-                )
-                val authkey = URLEncoder.encode(authKeyDataDto.data.authkey, "utf-8")
-                val chouka ="https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=b4ac24d133739b7b1d55173f30ccf980e0b73fc1&lang=zh-cn&device_type=mobile&game_version=CNRELiOS3.0.0_R10283122_S10446836_D10316937&plat_type=ios&game_biz=${gameBiz}&size=20&authkey=${authkey}&region=${region}&timestamp=1664481732&gacha_type=200&page=1&end_id=0"
-                editor.putString("body",chouka)
-                editor.commit()
+                val listUrl = ArrayList<ListUrl>()
+                for (userService in UserGameRolesByCookieData.data.list) {
+                    val gameUid = userService.game_uid
+                    val gameBiz = userService.game_biz
+                    val region = userService.region
+                    val authKeyPostData = AuthKeyPostData("webview_gacha",gameBiz,gameUid,region)
+                    val toJson = gson.toJson(authKeyPostData)
+                    val createRequestBody = RequestBody.create("application/json;charset=utf-8".toMediaType(), toJson)
+                    println(newcookie)
+                    val authkeyreq = Request.Builder()
+                        .url("https://api-takumi.mihoyo.com/binding/api/genAuthKey")
+                        .header("Content-Type","application/json;charset=utf-8")
+                        .header("Host","api-takumi.mihoyo.com")
+                        .header("Accept","application/json, text/plain, */*")
+                        .header("x-rpc-app_version","2.28.1")
+                        .header("x-rpc-client_type","5")
+                        .header("x-rpc-device_id","CBEC8312-AA77-489E-AE8A-8D498DE24E90")
+                        .header("DS",getDs())
+                        .header("Cookie",newcookie)
+                        .post(createRequestBody)
+                        .build()
+                    val authkeycall = client.newCall(authkeyreq)
+                    val authkeyresponse = authkeycall.execute()
+                    val authkeyDataDtobody = authkeyresponse.body?.string()
+                    println(authkeyDataDtobody)
+                    val authKeyDataDto = gson.fromJson(
+                        authkeyDataDtobody,
+                        AuthKeyDataDto::class.java
+                    )
+                    val authkey = URLEncoder.encode(authKeyDataDto.data.authkey, "utf-8")
+                    val url ="https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=b4ac24d133739b7b1d55173f30ccf980e0b73fc1&lang=zh-cn&device_type=mobile&game_version=CNRELiOS3.0.0_R10283122_S10446836_D10316937&plat_type=ios&game_biz=${gameBiz}&size=20&authkey=${authkey}&region=${region}&timestamp=1664481732&gacha_type=200&page=1&end_id=0"
+                    listUrl.add(ListUrl(gameUid,url))
+                }
 
                 val msg = Message.obtain()
-                msg.obj = ChouKaObj(200,"请求成功",chouka)
+                msg.obj = ChouKaObj(200,"请求成功",listUrl)
                 //返回主线程
                 handler.sendMessage(msg)
             }catch (e:java.lang.Exception){
                 val msg = Message.obtain()
-                msg.obj = ChouKaObj(404,"获取失败","")
+                msg.obj = ChouKaObj(404,"获取失败",ArrayList())
                 //返回主线程
                 handler.sendMessage(msg)
             }

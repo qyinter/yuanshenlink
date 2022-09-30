@@ -14,6 +14,7 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.qyinter.yuanshenlink.dto.ChouKaObj
 import com.qyinter.yuanshenlink.http.HttpUtil
@@ -35,12 +36,45 @@ class MainActivity : AppCompatActivity() {
                     val obj: ChouKaObj = msg.obj as ChouKaObj
                     if (obj.code==200){
                         val editText = findViewById<EditText>(R.id.input)
-                        editText.setText(obj.url)
-                        val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        //clipData中的this就是需要复制的文本
-                        val clipData = ClipData.newPlainText("",obj.url)
-                        cm.setPrimaryClip(clipData)
-                        Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
+
+                        if (obj.urlListObj.size>1){
+                            val array = Array(obj.urlListObj.size){""}
+                            for ((index, value) in obj.urlListObj.withIndex()) {
+                                array[index] = value.uid
+                            }
+                            builder.setIcon(R.drawable.ic_launcher_foreground).setTitle("选择你想要查询的账号");
+                            builder.setItems(
+                                array
+                            ) { dialog, which ->
+                                for (listUrl in obj.urlListObj) {
+                                    if (listUrl.uid==array[which]){
+                                        editText.setText(listUrl.url)
+                                        val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        //clipData中的this就是需要复制的文本
+                                        val clipData = ClipData.newPlainText("",obj.urlListObj.toString())
+                                        cm.setPrimaryClip(clipData)
+                                        Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                Toast.makeText(
+                                    applicationContext,
+                                    "你选择了Uid:" + array[which],
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                            val alert = builder.create()
+                            alert.show()
+                        }else{
+                            editText.setText(obj.urlListObj.get(0).url)
+                            val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            //clipData中的this就是需要复制的文本
+                            val clipData = ClipData.newPlainText("",obj.urlListObj.toString())
+                            cm.setPrimaryClip(clipData)
+                            Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                        }
+
                     }else{
                         Toast.makeText(this@MainActivity, "请先登录米游社", Toast.LENGTH_SHORT).show();
                     }
@@ -50,12 +84,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         R.id.cookieBtn.onClick(this){
-
-            val sharedPreference =  getSharedPreferences("COOKIE", Context.MODE_PRIVATE)
-            val editor = sharedPreference.edit()
             val instance = CookieManager.getInstance()
             val cookie = instance.getCookie("https://user.mihoyo.com")
-            HttpUtil.getAuthkey(cookie,editor,handle)
+            HttpUtil.getAuthkey(cookie,handle)
         }
     }
 }
