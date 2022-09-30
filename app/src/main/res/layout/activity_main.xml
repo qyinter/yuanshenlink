@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cookieBtn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="然后读取cookie"
+            android:insetRight="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/showcookie"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="然后显示抽卡链接"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:insetLeft="10dp" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"/>
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
