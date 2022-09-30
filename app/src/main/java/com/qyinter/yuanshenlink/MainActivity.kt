@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                                         editText.setText(listUrl.url)
                                         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                                         //clipData中的this就是需要复制的文本
-                                        val clipData = ClipData.newPlainText("",obj.urlListObj.toString())
+                                        val clipData = ClipData.newPlainText("",listUrl.url)
                                         cm.setPrimaryClip(clipData)
                                         Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
                                     }
