@@ -28,17 +28,22 @@ class MainActivity : AppCompatActivity() {
         val handle = object : Handler() {
             override fun handleMessage(msg: Message) {
                 msg.let {
-//                    val msgtmp =  msg?.obj
-                    val sharedPreference =  getSharedPreferences("COOKIE", Context.MODE_PRIVATE)
-                    val string = sharedPreference.getString("body", "稍等。还没获取到")
-                    val editText = findViewById<EditText>(R.id.input)
-                    editText.setText(string)
+                    val obj =  msg?.obj
+                    if ("success" == obj){
+                        val sharedPreference =  getSharedPreferences("COOKIE", Context.MODE_PRIVATE)
+                        val string = sharedPreference.getString("body", "稍等。还没获取到")
+                        val editText = findViewById<EditText>(R.id.input)
+                        editText.setText(string)
 
-                    val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    //clipData中的this就是需要复制的文本
-                    val clipData = ClipData.newPlainText("",string)
-                    cm.setPrimaryClip(clipData)
-                    Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                        val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        //clipData中的this就是需要复制的文本
+                        val clipData = ClipData.newPlainText("",string)
+                        cm.setPrimaryClip(clipData)
+                        Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(this@MainActivity, "请先登录米游社", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         }
