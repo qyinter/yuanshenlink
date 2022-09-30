@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                             builder.setIcon(R.drawable.ic_launcher_foreground).setTitle("选择你想要查询的账号");
                             builder.setItems(
                                 array
-                            ) { dialog, which ->
+                            ) { _, which ->
                                 for (listUrl in obj.urlListObj) {
                                     if (listUrl.uid==array[which]){
                                         editText.setText(listUrl.url)
@@ -67,10 +67,10 @@ class MainActivity : AppCompatActivity() {
                             val alert = builder.create()
                             alert.show()
                         }else{
-                            editText.setText(obj.urlListObj.get(0).url)
+                            editText.setText(obj.urlListObj[0].url)
                             val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             //clipData中的this就是需要复制的文本
-                            val clipData = ClipData.newPlainText("",obj.urlListObj.toString())
+                            val clipData = ClipData.newPlainText("", obj.urlListObj[0].url)
                             cm.setPrimaryClip(clipData)
                             Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
                         }
