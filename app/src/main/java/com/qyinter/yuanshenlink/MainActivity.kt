@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val myWebView: WebView = findViewById(R.id.webview)
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
-        //国服
+
         myWebView.loadUrl("https://user.mihoyo.com")
         val handle: Handler = object : Handler(Looper.getMainLooper()) {
             @SuppressLint("HandlerLeak")
@@ -92,9 +92,7 @@ class MainActivity : AppCompatActivity() {
 
         R.id.cookieBtn.onClick(this) {
             val instance = CookieManager.getInstance()
-            //国服
             val cookie = instance.getCookie("https://user.mihoyo.com")
-            //国服
             HttpUtil.getAuthkey(cookie, handle)
         }
     }
