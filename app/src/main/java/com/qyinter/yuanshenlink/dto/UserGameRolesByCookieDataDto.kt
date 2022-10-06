@@ -18,5 +18,5 @@ data class UserService(
     val level: Int,
     val nickname: String,
     val region: String,
-    val region_name: String
+    val region_name: String,
 )

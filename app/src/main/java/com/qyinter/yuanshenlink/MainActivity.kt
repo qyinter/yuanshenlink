@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         val myWebView: WebView = findViewById(R.id.webview)
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
+        //国服
         myWebView.loadUrl("https://user.mihoyo.com")
         val handle: Handler = object : Handler(Looper.getMainLooper()) {
             @SuppressLint("HandlerLeak")
@@ -34,27 +35,33 @@ class MainActivity : AppCompatActivity() {
                 //正常操作
                 msg.let {
                     val obj: ChouKaObj = msg.obj as ChouKaObj
-                    if (obj.code==200){
+                    if (obj.code == 200) {
                         val editText = findViewById<EditText>(R.id.input)
                         val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
 
-                        if (obj.urlListObj.size>1){
-                            val array = Array(obj.urlListObj.size){""}
+                        if (obj.urlListObj.size > 1) {
+                            val array = Array(obj.urlListObj.size) { "" }
                             for ((index, value) in obj.urlListObj.withIndex()) {
                                 array[index] = value.uid
                             }
-                            builder.setIcon(R.drawable.ic_launcher_foreground).setTitle("选择你想要查询的账号");
+                            builder.setIcon(R.drawable.ic_launcher_foreground)
+                                .setTitle("选择你想要查询的账号");
                             builder.setItems(
                                 array
                             ) { _, which ->
                                 for (listUrl in obj.urlListObj) {
-                                    if (listUrl.uid==array[which]){
+                                    if (listUrl.uid == array[which]) {
                                         editText.setText(listUrl.url)
-                                        val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        val cm =
+                                            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                                         //clipData中的this就是需要复制的文本
-                                        val clipData = ClipData.newPlainText("",listUrl.url)
+                                        val clipData = ClipData.newPlainText("", listUrl.url)
                                         cm.setPrimaryClip(clipData)
-                                        Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "已复制到剪贴板",
+                                            Toast.LENGTH_SHORT
+                                        ).show();
                                     }
                                 }
                                 Toast.makeText(
@@ -66,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                             }
                             val alert = builder.create()
                             alert.show()
-                        }else{
+                        } else {
                             editText.setText(obj.urlListObj[0].url)
                             val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             //clipData中的this就是需要复制的文本
@@ -75,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
                         }
 
-                    }else{
+                    } else {
                         Toast.makeText(this@MainActivity, "请先登录米游社", Toast.LENGTH_SHORT).show();
                     }
 
@@ -83,15 +90,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        R.id.cookieBtn.onClick(this){
+        R.id.cookieBtn.onClick(this) {
             val instance = CookieManager.getInstance()
+            //国服
             val cookie = instance.getCookie("https://user.mihoyo.com")
-            HttpUtil.getAuthkey(cookie,handle)
+            //国服
+            HttpUtil.getAuthkey(cookie, handle)
         }
     }
 }
-fun Int.onClick(activity: Activity, click:()->Unit){
-    activity.findViewById<View>(this).setOnClickListener{
+
+fun Int.onClick(activity: Activity, click: () -> Unit) {
+    activity.findViewById<View>(this).setOnClickListener {
         click()
     }
 }
