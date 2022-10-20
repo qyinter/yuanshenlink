@@ -19,8 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.qyinter.yuanshenlink.dto.ChouKaObj
 import com.qyinter.yuanshenlink.http.HttpUtil
 
-
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                                 array[index] = value.uid
                             }
                             builder.setIcon(R.drawable.ic_launcher_foreground)
-                                .setTitle("选择你想要查询的账号");
+                                .setTitle("选择你想要查询的账号")
                             builder.setItems(
                                 array
                             ) { _, which ->
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                                             this@MainActivity,
                                             "已复制到剪贴板",
                                             Toast.LENGTH_SHORT
-                                        ).show();
+                                        ).show()
                                     }
                                 }
                                 Toast.makeText(
@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                                     "你选择了Uid:" + array[which],
                                     Toast.LENGTH_SHORT
                                 ).show()
-
                             }
                             val alert = builder.create()
                             alert.show()
@@ -79,13 +78,11 @@ class MainActivity : AppCompatActivity() {
                             //clipData中的this就是需要复制的文本
                             val clipData = ClipData.newPlainText("", obj.urlListObj[0].url)
                             cm.setPrimaryClip(clipData)
-                            Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this@MainActivity, "已复制到剪贴板", Toast.LENGTH_SHORT).show()
                         }
-
                     } else {
-                        Toast.makeText(this@MainActivity, "请先登录米游社", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this@MainActivity, "请先登录米游社", Toast.LENGTH_SHORT).show()
                     }
-
                 }
             }
         }
@@ -93,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         R.id.cookieBtn.onClick(this) {
             val instance = CookieManager.getInstance()
             val cookie = instance.getCookie("https://user.mihoyo.com")
-            HttpUtil.getAuthkey(cookie, handle)
+            HttpUtil.getAuthKey(cookie, handle)
         }
     }
 }
