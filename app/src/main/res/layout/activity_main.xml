@@ -12,14 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="第一步：登录米游社"
+            android:text="第一步：登录米游社（登录页面可以滑动）"
             android:textSize="16dp" />
 
         <WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="30dp"
-            android:layout_height="400dp" />
+            android:layout_height="450dp" />
 
         <TextView
             android:layout_width="match_parent"
