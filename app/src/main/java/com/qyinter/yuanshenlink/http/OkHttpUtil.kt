@@ -106,7 +106,7 @@ object HttpUtil {
                     )
                     val authKey = URLEncoder.encode(authKeyDataDto.data.authkey, "utf-8")
                     val url =
-                        "https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=b4ac24d133739b7b1d55173f30ccf980e0b73fc1&lang=zh-cn&device_type=mobile&game_version=CNRELiOS3.0.0_R10283122_S10446836_D10316937&plat_type=ios&game_biz=${gameBiz}&size=20&authkey=${authKey}&region=${region}&timestamp=1664481732&gacha_type=200&page=1&end_id=0"
+                        "https://public-operation-hk4e.mihoyo.com/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=b4ac24d133739b7b1d55173f30ccf980e0b73fc1&lang=zh-cn&device_type=mobile&game_version=CNRELiOS3.0.0_R10283122_S10446836_D10316937&plat_type=ios&game_biz=${gameBiz}&size=20&authkey=${authKey}&region=${region}&timestamp=1664481732&gacha_type=200&page=1&end_id=0"
                     println(url)
                     listUrl.add(ListUrl(gameUid, url))
                 }
