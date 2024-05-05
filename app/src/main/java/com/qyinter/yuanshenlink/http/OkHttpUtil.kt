@@ -84,6 +84,7 @@ object HttpUtil {
                     val createRequestBody =
                         toJson.toRequestBody("application/json;charset=utf-8".toMediaType())
                     println(newcookie)
+                    newcookie = "stuid=266563920;stoken=v2_kqmX5715VFz7ohZYbIIVpA0i68yptXG-5tmRdEOweXQpsT2vjN1Q0a-OUD7I-Egjoyj7r1U9RPCCgfvaVla5DGTpWimZ_F0ZcE1S5QOLwmbAJ2anVQg2RWliHmTUT_8=;mid=0gaw9ppzee_mhy;login_ticket=jeYwUrBdCKuNZa1qYIl9Ik8FraC0PM9xpIyTHg3d;"
                     val authKeyReq = Request.Builder()
                         .url("https://api-takumi.mihoyo.com/binding/api/genAuthKey")
                         .header("Content-Type", "application/json;charset=utf-8")
@@ -91,7 +92,7 @@ object HttpUtil {
                         .header("Accept", "application/json, text/plain, */*")
                         .header("x-rpc-app_version", "2.28.1")
                         .header("x-rpc-client_type", "5")
-                        .header("x-rpc-device_id", "CBEC8312-AA77-489E-AE8A-8D498DE24E90")
+                        .header("x-rpc-device_id", "CBEC8412-AA87-410E-AE8A-8D498DE24E90")
                         .header("DS", getDs())
                         .header("Cookie", newcookie)
                         .post(createRequestBody)

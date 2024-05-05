@@ -1,64 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="第一步：登录米游社（登录页面可以滑动）"
-            android:textSize="16dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.登录进游戏,点击历史抽卡,url自动获取..."
+        android:textSize="16dp" />
 
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="30dp"
-            android:layout_height="450dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="注意:云原神使用的官方的安全有保障...最新更新关注微信公众号:《原魔工具箱》"
+        android:textSize="16dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="第二步：获取链接并复制到剪贴板"
-            android:textSize="16dp" />
+    <!--    <com.google.android.material.button.MaterialButtonToggleGroup-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="16dp"-->
+    <!--        android:layout_marginVertical="10dp">-->
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <!--        <com.google.android.material.button.MaterialButton-->
+    <!--            android:id="@+id/cookieBtn"-->
+    <!--            android:layout_width="100dp"-->
+    <!--            android:layout_height="40dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:text="点击获取并复制链接" />-->
 
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="10dp">
+    <!--    </com.google.android.material.button.MaterialButtonToggleGroup>-->
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cookieBtn"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="点击获取并复制链接" />
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="12dp" />
 
-            <!--        <com.google.android.material.button.MaterialButton-->
-            <!--            android:id="@+id/showcookie"-->
-            <!--            android:layout_width="100dp"-->
-            <!--            android:layout_height="40dp"-->
-            <!--            android:text="然后显示抽卡链接"-->
-            <!--            android:layout_marginLeft="20dp"-->
-            <!--            android:layout_weight="1"-->
-            <!--            android:insetLeft="10dp" />-->
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        <EditText
-            android:id="@+id/input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:textSize="12dp" />
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
