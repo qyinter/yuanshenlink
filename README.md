@@ -13,4 +13,6 @@
   
 - 永久停止更新。
   
+- 同样的项目更新到https://github.com/qyinter/mihoyo_link
+  
 - 最新app 微信公众号关注：《原魔工具箱》《绳网小助手》
